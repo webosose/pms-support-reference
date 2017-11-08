@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Finite-State-Machine Version="0.3" InitialState="ActiveState">
+        <Variable Name="Loop" Value="2"> </Variable>
+        <Variable Name="Test" Value="20"> </Variable>
+        <State Name="ActiveState" Class="ActiveState">
+                <Transition OnEvent="poweroff" ToState="TransitionPowerOff">
+                </Transition>
+                <Transition OnEvent="reboot" ToState="RebootState">
+                </Transition>
+        </State>
+        <State Name="ActiveStandbyState" Class="ActiveStandbyState">
+                <Transition OnEvent="poweroff" ToState="PowerOffState">
+                </Transition>
+                <Transition OnEvent="reboot" ToState="RebootState">
+                </Transition>
+        </State>
+        <State Name="RebootState" Class="RebootState">
+        </State>
+        <State Name="TransitionPowerOff" Class="TransitionPowerOff">
+                <Transition OnEvent="NACK" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="PowerOffState">
+                </Transition>
+        </State>
+        <State Name="PowerOffState" Class="PowerOffState">
+        </State>
+</Finite-State-Machine>
