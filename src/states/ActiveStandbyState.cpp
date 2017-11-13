@@ -1,6 +1,6 @@
 // @@@LICENSE
 //
-//      Copyright (c) 2017 LG Electronics, Inc.
+//      Copyright (c) 2017-2018 LG Electronics, Inc.
 //
 // Confidential computer software. Valid license from LG required for
 // possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -16,15 +16,13 @@ bool ActiveStandbyState::mIsObjectRegistered = ActiveStandbyState::RegisterObjec
 
 bool ActiveStandbyState::Activate()
 {
+    MSG_INFO("Entered in Active Standby State!");
+
     if(!stateReference::GetInstance().notifyStateListeners("ActiveStandbyState"))
     {
-        MSG_DEBUG("Error entering Active StandBy State!");
-        return false;
+        MSG_DEBUG("Error Notifying ActiveStandbyState Subscribers");
     }
-    else
-    {
-        MSG_DEBUG("Entered in Active StandBy State!");
-    }
+
     return true;
 }
 
