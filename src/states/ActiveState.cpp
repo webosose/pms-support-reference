@@ -1,6 +1,6 @@
 // @@@LICENSE
 //
-//      Copyright (c) 2017 LG Electronics, Inc.
+//      Copyright (c) 2017-2018 LG Electronics, Inc.
 //
 // Confidential computer software. Valid license from LG required for
 // possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -16,15 +16,13 @@ bool ActiveState::mIsObjectRegistered = ActiveState::RegisterObject();
 
 bool ActiveState::Activate()
 {
+    MSG_INFO("Entered in Active State!");
+
     if(!stateReference::GetInstance().notifyStateListeners("ActiveState"))
     {
-        MSG_DEBUG("Error entering Active State!");
-        return false;
+        MSG_DEBUG("Error Notifying ActiveState Subscribers");
     }
-    else
-    {
-        MSG_DEBUG("Entered in Active State!");
-    }
+
     return true;
 }
 
