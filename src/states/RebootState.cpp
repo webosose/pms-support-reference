@@ -1,6 +1,6 @@
 // @@@LICENSE
 //
-//      Copyright (c) 2017-2018 LG Electronics, Inc.
+//      Copyright (c) 2017-2020 LG Electronics, Inc.
 //
 // Confidential computer software. Valid license from LG required for
 // possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -10,8 +10,8 @@
 //
 // LICENSE@@@
 
-#include "pmscore/NyxUtil.h"
 #include "RebootState.h"
+#include "pmscore/NyxUtil.h"
 
 bool RebootState::mIsObjectRegistered = RebootState::RegisterObject();
 
@@ -24,8 +24,8 @@ bool RebootState::Activate()
         MSG_DEBUG("Error Notifying RebootState Subscribers");
     }
 
-    // TODO: Decide later reasons to pass to nyx [if any specific]
-    NyxUtil::getInstance().reboot("Reboot");
+    system("reboot");
+
     return true;
 }
 

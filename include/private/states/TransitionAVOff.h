@@ -1,6 +1,6 @@
 // @@@LICENSE
 //
-//      Copyright (c) 2017 LG Electronics, Inc.
+//      Copyright (c) 2020 LG Electronics, Inc.
 //
 // Confidential computer software. Valid license from LG required for
 // possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -10,45 +10,43 @@
 //
 // LICENSE@@@
 
-#ifndef ACTIVE_STANDBY_STATE_H
-#define ACTIVE_STANDBY_STATE_H
+#ifndef TRANSITION_AV_OFF_H
+#define TRANSITION_AV_OFF_H
 
-#include <functional>
-#include <luna-service2/lunaservice.hpp>
+#include <string>
 
 #include "FSM.h"
 #include "pmscore/log.h"
-#include "pmscore/Singleton.h"
 #include "pmscore/StateManager.h"
 
-class ActiveStandbyState : public FSM::CFSMState {
+class TransitionAVOff : public FSM::CFSMState {
 public:
     bool Activate();
     bool Deactivate();
 
-    static FSM::CFSMObject* CreateObject()
+    static FSM::CFSMObject * CreateObject()
     {
-        return new ActiveStandbyState;
+        return new TransitionAVOff;
     }
 
     static bool RegisterObject()
     {
-       MSG_DEBUG2(LOG_CONTEXT_DEBUG, "Registering statemachine_ActiveStandby");
-       StateManager::getFSMInstance()->Register("ActiveStandbyState", ActiveStandbyState::CreateObject);
-       return true;
+        MSG_DEBUG2(LOG_CONTEXT_DEBUG, "Registering statemachine_TransitionAVOff");
+        StateManager::getFSMInstance()->Register("TransitionAVOff", TransitionAVOff::CreateObject);
+        return true;
     }
 
-    ~ActiveStandbyState()
+    ~TransitionAVOff()
     {
         delete mpLog;
         mpLog = nullptr;
     }
+
 private:
-    ActiveStandbyState() : mpLog(new Logger(LOG_CONTEXT_DEBUG))
+    TransitionAVOff() : mpLog(new Logger(LOG_CONTEXT_DEBUG))
     {
     }
     static bool mIsObjectRegistered;
     const Logger* mpLog;
 };
-
-#endif
+#endif //TRANSITION_AV_OFF_H

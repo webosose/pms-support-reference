@@ -10,26 +10,26 @@
 //
 // LICENSE@@@
 
-#include "PowerOffState.h"
-#include "pmscore/NyxUtil.h"
+#include "StandbyState.h"
+#include <pbnjson.hpp>
 
-bool PowerOffState::mIsObjectRegistered = PowerOffState::RegisterObject();
+bool StandbyState::mIsObjectRegistered = StandbyState::RegisterObject();
 
-bool PowerOffState::Activate()
+bool StandbyState::Activate()
 {
-    MSG_INFO("Entered in PowerOff State!");
-    if(!stateReference::GetInstance().notifyStateListeners("PowerOffState"))
+    MSG_INFO("Entered in Standby State!");
+
+    if(!stateReference::GetInstance().notifyStateListeners("StandbyState"))
     {
-        MSG_DEBUG("Error Notifying PowerOffState Subscribers");
+        MSG_DEBUG("Error Notifying StandbyState Subscribers");
     }
 
-    NyxUtil::getInstance().shutdown("shutdown");
-
     return true;
 }
 
-bool PowerOffState::Deactivate()
-{
-    MSG_INFO("Exiting PowerOff State");
+bool StandbyState::Deactivate() {
+    MSG_INFO("Exiting StandBy State");
     return true;
 }
+
+

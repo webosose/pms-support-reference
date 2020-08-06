@@ -1,6 +1,6 @@
 // @@@LICENSE
 //
-//      Copyright (c) 2017 LG Electronics, Inc.
+//      Copyright (c) 2020 LG Electronics, Inc.
 //
 // Confidential computer software. Valid license from LG required for
 // possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -10,40 +10,43 @@
 //
 // LICENSE@@@
 
-#ifndef SUSPEND_STATE_H
-#define SUSPEND_STATE_H
+
+#ifndef AVOFF_STATE_H
+#define AVOFF_STATE_H
+
+#include <string>
 
 #include "FSM.h"
 #include "pmscore/log.h"
 #include "pmscore/StateManager.h"
 
-class SuspendState : public FSM::CFSMState {
+class AVOffState : public FSM::CFSMState {
 public:
     bool Activate();
     bool Deactivate();
     static FSM::CFSMObject * CreateObject()
     {
-       return new SuspendState;
+        return new AVOffState;
     }
 
     static bool RegisterObject()
     {
-        MSG_DEBUG2(LOG_CONTEXT_DEBUG, "Registering statemachine_Suspend");
-        StateManager::getFSMInstance()->Register("SuspendState", SuspendState::CreateObject);
+        MSG_DEBUG2(LOG_CONTEXT_DEBUG, "Registering statemachine_AVOffState");
+        StateManager::getFSMInstance()->Register("AVOffState", AVOffState::CreateObject);
         return true;
     }
 
-    ~SuspendState()
+    ~AVOffState()
     {
         delete mpLog;
         mpLog = nullptr;
     }
 
 private:
-    SuspendState() : mpLog(new Logger(LOG_CONTEXT_DEBUG))
+    AVOffState() : mpLog(new Logger(LOG_CONTEXT_DEBUG))
     {
     }
     static bool mIsObjectRegistered;
     const Logger* mpLog;
 };
-#endif
+#endif //AVOFF_STATE_H
