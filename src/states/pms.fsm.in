@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Finite-State-Machine Version="0.3" InitialState="StandbyState">
+        <State Name="StandbyState" Class="StandbyState">
+                <Transition OnEvent="poweron" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="poweroff" ToState="AVOffState">
+                </Transition>
+                <Transition OnEvent="swupdate" ToState="DiagnosticModeState">
+                </Transition>
+        </State>
+
+        <State Name="ActiveState" Class="ActiveState">
+                <Transition OnEvent="poweroff" ToState="TransitionAVOff">
+                </Transition>
+                <Transition OnEvent="reboot" ToState="TransitionReboot">
+                </Transition>
+        </State>
+
+        <State Name="TransitionAVOff" Class="TransitionAVOff">
+                <Transition OnEvent="NACK" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="AVOffState">
+                </Transition>
+        </State>
+
+        <State Name="AVOffState" Class="AVOffState">
+                <Transition OnEvent="poweron" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="garage" ToState="TransitionGarageMode">
+                </Transition>
+        </State>
+
+        <State Name="TransitionGarageMode" Class="TransitionGarageMode">
+                <Transition OnEvent="NACK" ToState="PowerOffState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="GarageModeState">
+                </Transition>
+        </State>
+
+        <State Name="GarageModeState" Class="GarageModeState">
+                <Transition OnEvent="poweron" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="garagetimeout" ToState="TransitionGarageExit">
+                </Transition>
+        </State>
+
+        <State Name="TransitionGarageExit" Class="TransitionGarageExit">
+                <Transition OnEvent="NACK" ToState="GarageModeState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="GarageExitState">
+                </Transition>
+        </State>
+
+        <State Name="GarageExitState" Class="GarageExitState">
+                <Transition OnEvent="poweroff" ToState="PowerOffState">
+                </Transition>
+                <Transition OnEvent="reboot" ToState="RebootState">
+                </Transition>
+        </State>
+
+        <State Name="TransitionReboot" Class="TransitionReboot">
+                <Transition OnEvent="NACK" ToState="ActiveState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="RebootState">
+                </Transition>
+        </State>
+
+        <State Name="RebootState" Class="RebootState">
+        </State>
+
+        <State Name="TransitionPowerOff" Class="TransitionPowerOff">
+                <Transition OnEvent="NACK" ToState="GarageModeState">
+                </Transition>
+                <Transition OnEvent="ACK" ToState="PowerOffState">
+                </Transition>
+        </State>
+
+        <State Name="PowerOffState" Class="PowerOffState">
+                <Transition OnEvent="poweron" ToState="StandbyState">
+                </Transition>
+        </State>
+
+        <State Name="DiagnosticModeState" Class="DiagnosticModeState">
+                <Transition OnEvent="poweroff" ToState="PowerOffState">
+                </Transition>
+        </State>
+
+</Finite-State-Machine>
