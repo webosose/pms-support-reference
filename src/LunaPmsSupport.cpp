@@ -27,8 +27,6 @@ const char* const LunaPmsSupport::kPmsTimeOut = "TimeOut";
 const char* const LunaPmsSupport::kPmsGarageModeTimeOut = "GarageModeTimeOut";
 const char* const LunaPmsSupport::kPmsGarageSSID = "GarageSSID";
 
-const char* LunaPmsSupport::mpLogContext = "";
-
 bool LunaPmsSupport::mIsTransitionState = false;
 int LunaPmsSupport::mpLogTimeOutSec = 0;
 int LunaPmsSupport::miGarageModeTimeoutSec = 0;
@@ -65,8 +63,6 @@ LunaPmsSupport::LunaPmsSupport(PmsConfig* pConfig, LSHandle *pLsHandle) :
 
     if(err == kPmsSuccess)
     logCtxt = logContext.c_str();
-
-    mpLogContext = logCtxt;
 
     mpConfig->GetString(kPmsInterfaceName,
     kPmsTimeOut, &timeContext);
@@ -197,6 +193,7 @@ bool LunaPmsSupport::handleStateChange(const std::string& statename)
         std::string event  = "poweron";
         if(flagFile)
         {
+            (void) fclose(flagFile);
             event = "swupdate";
             //Todo: Do we need to publish power on reason for subcribers after power on
         }
